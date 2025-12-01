@@ -20,7 +20,7 @@
    - 次のカードボタンで順番にカードを進めることができる
      
 # ③アプリのデプロイURL
-- （デプロイURLをここに記入してください）
+- https://eisaku-lab.github.io/ankimemo/
 
 # ④アプリのログイン用IDまたはPassword（ある場合）
 - ID: 今回なし
