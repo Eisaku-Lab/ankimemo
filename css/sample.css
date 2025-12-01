@@ -1,0 +1,265 @@
+body {
+    margin: 0;
+    padding: 0;
+    text-align: left;
+    font-size: 32px;
+    width: 100%;
+}
+
+header {
+    background-color: #fff;
+    border-bottom: 1px solid #ccc;
+    text-align: center;
+}
+
+h1 {
+    font-size: 100%;
+}
+
+main {
+    width: 100%;
+    display: block;
+    border-bottom: 1px solid #ccc;
+    position: relative;
+}
+
+footer {
+    background-color: #fff;
+    border-bottom: 1px solid #ccc;
+    text-align: center;
+}
+
+p {
+    font-size: 200%;
+    text-align: center;
+    border-bottom: 1px solid #fff;
+    height: 200px;
+}
+
+ul {
+    padding: 0;
+    border-top: 1px solid #000000;
+    display: table;
+    /* 定義 */
+    table-layout: fixed;
+    width: 96%;
+    font-size: 80%;
+    margin: 0 3%;
+    text-align: center;
+}
+
+li {
+    list-style-type: none;
+    border: 1px solid #666;
+    background-color: #fff;
+    display: table-cell;
+    /* 定義 */
+    cursor: pointer;
+    color: #0d7dfd;
+}
+
+li:hover {
+    background: #0d7dfd;
+    color: #fff;
+}
+
+textarea {
+    margin: 10px 3%;
+    width: 95%;
+    height: 100px;
+    font-size: 80%;
+    box-shadow: 3px 3px 3px 3px #555;
+    background-color: rgb(241, 239, 239);
+}
+
+#key {
+    margin: 0 3%;
+    width: 95%;
+    font-size: 80%;
+    background-color: #e1efff;
+    box-shadow: 3px 3px 3px 3px #555;
+}
+
+table {
+    margin: 20px 3%;
+    border: 1px solid #8dc3f5;
+    width: 96%;
+
+}
+
+th {
+    width: 30%;
+    font-size: 24px;
+    background-color: #d0e7fc;
+    border-bottom: 1px solid #8dc3f5;
+}
+
+td {
+    font-size: 16px;
+    background-color: rgb(241, 239, 239);
+    border-bottom: 1px solid #8dc3f5;
+}
+
+
+
+body {
+    font-family: Arial, sans-serif;
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #f5f5f5;
+}
+
+header h1 {
+    text-align: center;
+    color: #333;
+}
+
+.input-area {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.input-area h1 {
+    font-size: 20px;
+    margin-top: 0;
+}
+
+input,
+textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    box-sizing: border-box;
+}
+
+textarea {
+    min-height: 80px;
+    resize: vertical;
+}
+
+button {
+    background-color: #4CAF50;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    margin: 5px 5px 5px 0;
+    font-size: 16px;
+}
+
+button:hover {
+    background-color: #45a049;
+}
+
+.study-button {
+    background-color: #2196F3;
+}
+
+.study-button:hover {
+    background-color: #0b7dda;
+}
+
+.clear-button {
+    background-color: #ff9800;
+}
+
+.clear-button:hover {
+    background-color: #e68900;
+}
+
+.delete-btn {
+    background-color: #f44336;
+    padding: 8px 16px;
+    font-size: 14px;
+}
+
+.delete-btn:hover {
+    background-color: #da190b;
+}
+
+.study-mode {
+    background-color: white;
+    padding: 40px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    min-height: 300px;
+    display: none;
+}
+
+.study-mode h2 {
+    color: #2196F3;
+}
+
+.progress {
+    margin: 20px 0;
+    font-size: 18px;
+    color: #666;
+}
+
+.question-label {
+    color: #2196F3;
+    font-weight: bold;
+    font-size: 18px;
+    margin: 10px 0;
+}
+
+.answer-label {
+    color: #4CAF50;
+    font-weight: bold;
+    font-size: 18px;
+    margin: 10px 0;
+}
+
+.card-content {
+    font-size: 24px;
+    padding: 40px;
+    background-color: #f9f9f9;
+    border-radius: 8px;
+    margin: 20px 0;
+    min-height: 150px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.study-controls button {
+    margin: 10px;
+}
+
+table {
+    width: 100%;
+    background-color: white;
+    border-collapse: collapse;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+th,
+td {
+    padding: 12px;
+    text-align: left;
+    border-bottom: 1px solid #ddd;
+}
+
+thead th {
+    background-color: #4CAF50;
+    color: white;
+}
+
+tbody tr:hover {
+    background-color: #f5f5f5;
+}
+
+footer {
+    text-align: center;
+    margin-top: 40px;
+    color: #999;
+}

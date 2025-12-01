@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <title>暗記カード</title>
+    <script src="js/jquery-2.1.3.min.js"></script>
+    <link rel="stylesheet" href="css/sample.css">
+</head>
+
+<body>
+    <header>
+        <h1>暗記カード</h1>
+    </header>
+    <main>
+        <div class="input-area">
+            <h1>新しいカードを作成</h1>
+            <input type="text" id="question" placeholder="問題を入力してください">
+            <textarea id="answer" placeholder="答えを入力してください"></textarea>
+            <button id="save">カードを追加</button>
+            <button id="studybutton" class="study-button">学習する</button>
+            <button id="clearallbutton" class="clear-button">すべて削除</button>
+
+        </div>
+
+        <!-- 学習モードエリア -->
+        <div class="study-mode" id="studymode">
+            <h2>学習モード</h2>
+            <div class="progress">
+                <span id="currentcard">0</span> / <span id="totalcard">0</span>
+            </div>
+            <div id="cardLabel" class="question-label">問題</div>
+            <div class="card-content" id="cardcontent">
+                問題がここで表示されます
+            </div>
+            <div class="study-controls">
+                <button id="showanswerbtn">
+                    答えを見る
+                </button>
+                <button id="nextcardbtn">
+                    次のカード
+                </button>
+                <button id="endstudybtn">
+                    学習を終了
+                </button>
+            </div>
+        </div>
+
+        <table id="cardtable">
+            <thead>
+                <tr>
+                    <th>No.</th>
+                    <th>問題</th>
+                    <th>答え</th>
+                    <th>操作</th>
+                </tr>
+            </thead>
+            <tbody id="cardlist">
+                <!-- カードが表示される -->
+            </tbody>
+        </table>
+
+    </main>
+
+
+    <script>
+
+        // 画面表示関数
+        function displaycards() {
+            $("#cardlist").empty();
+
+            let count = localStorage.getItem("card_count");
+            count = count ? parseInt(count) : 0;
+
+            for (let i = 0; i < count; i++) {
+                const question = localStorage.getItem("card_" + i + "_question");
+                const answer = localStorage.getItem("card_" + i + "_answer");
+
+                if (question === null || answer === null) {
+                    continue;
+                }
+
+                const html = `
+                    <tr>
+                        <td>${i + 1}</td>
+                        <td>${question}</td>
+                        <td>${answer}</td>
+                        <td>
+                            <button class="delete-btn" data-index="${i}">削除</button>
+                        </td>
+                    </tr>
+                `;
+                $("#cardlist").append(html);
+            }
+        }
+
+        //1.Save クリックイベント
+
+
+        $("#save").on("click", function () {
+            // 入力内容取得
+            const question = $("#question").val().trim();
+            const answer = $("#answer").val().trim();
+
+            // カード数を取得
+            let count = localStorage.getItem("card_count");
+            count = count ? parseInt(count) : 0;
+
+            // 新しいカードを保存
+            localStorage.setItem("card_" + count + "_question", question);
+            localStorage.setItem("card_" + count + "_answer", answer);
+
+            // カード数を更新
+            count++;
+            localStorage.setItem("card_count", count);
+
+            // 画面を更新
+            displaycards();
+
+            // 入力欄をクリア
+            $("#question").val("");
+            $("#answer").val("");
+        });
+
+        //2.学習するクリックイベント
+        $("#studybutton").on("click", function () {
+            // カード数を取得
+            let count = localStorage.getItem("card_count");
+            count = count ? parseInt(count) : 0;
+
+            if (count === 0) {
+                alert("カードが登録されていません");
+                return;
+            }
+
+            // 削除されていないカードのインデックスを集める
+            let cardindex = [];
+            for (let i = 0; i < count; i++) {
+                const question = localStorage.getItem("card_" + i + "_question");
+                if (question !== null) {
+                    cardindex.push(i);
+                }
+            }
+
+            // シャッフル
+            for (let i = cardindex.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [cardindex[i], cardindex[j]] = [cardindex[j], cardindex[i]];
+            }
+
+            // 現在のカード位置
+            let currentposition = 0;
+
+            // 画面切り替え
+            $("#studymode").show();
+            $("#cardtable").hide();
+            $(".input-area").hide();
+
+            // カード表示関数
+            function showcard() {
+                const index = cardindex[currentposition];
+                const question = localStorage.getItem("card_" + index + "_question");
+
+                $("#currentcard").text(currentposition + 1);
+                $("#totalcard").text(cardindex.length);
+                $("#cardLabel").text("問題").removeClass("answer-label").addClass("question-label");
+                $("#cardcontent").text(question);
+                $("#showanswerbtn").show();
+                $("#nextcardbtn").hide();
+            }
+
+            // 答えを見るボタン
+            $("#showanswerbtn").off("click").on("click", function () {
+                const index = cardindex[currentposition];
+                const answer = localStorage.getItem("card_" + index + "_answer");
+
+                $("#cardLabel").text("答え").removeClass("question-label").addClass("answer-label");
+                $("#cardcontent").text(answer);
+                $("#showanswerbtn").hide();
+                $("#nextcardbtn").show();
+            });
+
+            // 次のカードボタン
+            $("#nextcardbtn").off("click").on("click", function () {
+                currentposition++;
+                if (currentposition >= cardindex.length) {
+                    alert("全てのカードを学習しました！");
+                    $("#studymode").hide();
+                    $("#cardtable").show();
+                    $(".input-area").show();
+                } else {
+                    showcard();
+                }
+            });
+
+            // 学習を終了ボタン
+            $("#endstudybtn").off("click").on("click", function () {
+                $("#studymode").hide();
+                $("#cardtable").show();
+                $(".input-area").show();
+            });
+
+            // 最初のカードを表示
+            showcard();
+        });
+
+        //3.clear クリックイベント
+        $("#cardlist").on("click", ".delete-btn", function () {
+            // 削除するカードのインデックスを取得
+            const index = parseInt($(this).attr("data-index"));
+
+            // LocalStorageから削除
+            localStorage.removeItem("card_" + index + "_question");
+            localStorage.removeItem("card_" + index + "_answer");
+
+            // 画面を更新
+            displaycards();
+        });
+
+
+        // 4.allclear クリックイベント
+        $("#clearallbutton").on("click", function () {
+            // カード数を取得
+            let count = localStorage.getItem("card_count");
+            count = count ? parseInt(count) : 0;
+
+            // すべてのカードを削除
+            for (let i = 0; i < count; i++) {
+                localStorage.removeItem("card_" + i + "_question");
+                localStorage.removeItem("card_" + i + "_answer");
+            }
+
+            // カード数をリセット
+            localStorage.setItem("card_count", "0");
+
+            // 画面を更新
+            displaycards();
+        });
+
+        // 5. ページ読み込み時：保存データ取得表示
+        displaycards();
+
+    </script>
+    <footer><small>G's</small></footer>
+</body>
+
+</html>
